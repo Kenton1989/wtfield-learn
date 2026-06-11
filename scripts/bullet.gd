@@ -23,7 +23,6 @@ func _physics_process(delta: float) -> void:
 	var next_position := current_position + direction * speed * delta
 	
 	if _will_hit_world(current_position, next_position):
-		push_warning("bullet die hit world")
 		queue_free()
 		return
 	
@@ -38,7 +37,6 @@ func _on_area_entered(area: Area2D):
 	if area is Bullet:
 		return
 
-	push_warning("bullet die hit area")
 	queue_free()
 
 func _will_hit_world(from_pos: Vector2, to_pos: Vector2):

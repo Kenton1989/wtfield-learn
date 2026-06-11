@@ -1,51 +1,44 @@
 extends CharacterBody2D
+class_name Player
 
 const BULLET = preload("res://scene/bullet.tscn")
 
 const NORMAL_ANIMETION_PREFIX := &"normal"
 const ARMED_ANIMETION_PREFIX := &"armed"
 const DEFAULT_FIRE_SPEED := 1.0
-enum PlayerMode {
-	NORMAL,
-	ARMED
-}
-enum FireMode {
-	STRAIGHT,
-	SPIRAL
-}
 
 
 @onready var body_sprite: AnimatedSprite2D = $BodySprite
 @onready var fire_timer: Timer = $FireTimer
 @onready var armed_effect_sprite: AnimatedSprite2D = $ArmedEffectSprite
 
-@export var move_speed: float = 120.0
-@export var fire_interval: float = 0.18
+@export var base_move_speed: float = 120.0
+@export var base_fire_interval: float = 0.18
 @export var gun_length: float = 10.0
 
 
-var player_mode: PlayerMode = PlayerMode.NORMAL
+var player_mode := PickUpConfig.PlayerMode.NORMAL
 var move_direction := Vector2.ZERO
 var fire_direction := Vector2.ZERO
 var face_direction := Vector2.RIGHT
 
-var fire_mode: FireMode = FireMode.STRAIGHT
+var fire_mode:= PickUpConfig.FireMode.STRAIGHT
 var next_bullet_direction := Vector2.RIGHT
 var fire_speed: float = DEFAULT_FIRE_SPEED
-var armed_fire_speed: float = DEFAULT_FIRE_SPEED
 var sprial_fire_speed: float = 20
 
 var fire_countdown: float = 0.0;
 
 func _ready() -> void:
-	fire_mode = FireMode.SPIRAL
+	fire_mode = PickUpConfig.FireMode.STRAIGHT
 
 	fire_timer.one_shot = true
-	fire_timer.wait_time = 0.0
+	fire_timer.stop()
+
 	_update_body_animation()
 	_update_armed_effect()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var move_input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var fire_input := Input.get_vector("fire_left", "fire_right", "fire_up", "fire_down")
 
@@ -56,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	elif move_direction != Vector2.ZERO:
 		face_direction = move_direction
 
-	velocity = move_direction * move_speed
+	velocity = move_direction * base_move_speed
 	move_and_slide()
 
 	_update_body_animation()
@@ -92,13 +85,13 @@ func _fire_bullets() -> void:
 
 	var has_fire_bullets := false
 	match fire_mode:
-		FireMode.STRAIGHT:
+		PickUpConfig.FireMode.STRAIGHT:
 			has_fire_bullets = _fire_straight(fire_direction)
-		FireMode.SPIRAL:
+		PickUpConfig.FireMode.SPIRAL:
 			has_fire_bullets = _fire_spiral()
 
 	if has_fire_bullets:
-		fire_timer.start(_get_fire_interval())
+		fire_timer.start(_get_base_fire_interval())
 
 func _fire_straight(direction: Vector2) -> bool:
 	if direction == Vector2.ZERO:
@@ -131,15 +124,17 @@ func _spawn_bullet(direction: Vector2) -> bool:
 	return true
 
 func _get_is_armed() -> bool:
-	return player_mode == PlayerMode.ARMED || fire_mode == FireMode.SPIRAL
+	return player_mode == PickUpConfig.PlayerMode.ARMED || fire_mode == PickUpConfig.FireMode.SPIRAL
 
-func _get_fire_interval() -> float:
-	return maxf(fire_interval / _get_fire_speed(), 0.01)
+func _get_base_fire_interval() -> float:
+	return maxf(base_fire_interval / _get_fire_speed(), 0.01)
 
 func _get_fire_speed() -> float:
 	var speed = DEFAULT_FIRE_SPEED
-	if fire_mode == FireMode.SPIRAL:
+	if fire_mode == PickUpConfig.FireMode.SPIRAL:
 		speed *= sprial_fire_speed
+	else:
+		speed *= fire_speed
 	return speed
 
 func _vector_to_facing_suffix(direction: Vector2) -> StringName:

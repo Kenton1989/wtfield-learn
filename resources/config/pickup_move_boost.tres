@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PickUpConfig" format=3 uid="uid://uvlhd1ubaykj"]
+
+[ext_resource type="Texture2D" uid="uid://djtv54so53e4v" path="res://resources/atlas/pickup_move_boost.tres" id="1_ibebj"]
+[ext_resource type="Script" uid="uid://di2oatg4fb24r" path="res://scripts/pickup_config.gd" id="1_w6w24"]
+
+[resource]
+script = ExtResource("1_w6w24")
+pickup_type = 1
+display_name = "Shoes"
+drop_weight = 2.0
+move_speed_mult = 1.5
+icon_texture = ExtResource("1_ibebj")
+metadata/_custom_type_script = "uid://di2oatg4fb24r"

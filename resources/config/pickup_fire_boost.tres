@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PickUpConfig" format=3 uid="uid://d2a0tfdyeodki"]
+
+[ext_resource type="Script" uid="uid://di2oatg4fb24r" path="res://scripts/pickup_config.gd" id="1_gtikk"]
+[ext_resource type="Texture2D" uid="uid://cm0kga1it4b0l" path="res://resources/atlas/pickup_fire_boost.tres" id="1_wu4af"]
+
+[resource]
+script = ExtResource("1_gtikk")
+pickup_type = 2
+display_name = "Originum"
+drop_weight = 2.0
+fire_speed_mult = 2.0
+player_mode = 2
+icon_texture = ExtResource("1_wu4af")
+metadata/_custom_type_script = "uid://di2oatg4fb24r"

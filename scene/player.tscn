@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d4l3yanmbgyb5"]
 
-[ext_resource type="Script" uid="uid://b6e6tvd1771u8" path="res://scene/player.gd" id="1_fvtld"]
+[ext_resource type="Script" uid="uid://b6e6tvd1771u8" path="res://scripts/player.gd" id="1_fvtld"]
 [ext_resource type="Texture2D" uid="uid://c8te5tn22uwda" path="res://resources/texture/w.png" id="1_xo3ru"]
 [ext_resource type="Texture2D" uid="uid://dua8lrrx8a7bc" path="res://resources/texture/float_gun.png" id="2_hjaqi"]
 
@@ -379,6 +379,7 @@ animations = [{
 radius = 7.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1991648755]
+collision_layer = 2
 script = ExtResource("1_fvtld")
 
 [node name="BodySprite" type="AnimatedSprite2D" parent="." unique_id=126605176]
@@ -393,6 +394,7 @@ frame = 4
 frame_progress = 0.9945309
 
 [node name="BodyCollisionShape" type="CollisionShape2D" parent="." unique_id=1027996413]
+position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_4qnqm")
 
 [node name="FireTimer" type="Timer" parent="." unique_id=1305392088]
