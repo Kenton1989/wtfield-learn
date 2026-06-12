@@ -13,25 +13,43 @@ const SHADER_PARAM_BLINK_ENABLED := &"blink_enabled"
 
 var is_disappearing: bool = false
 
+func _set_timeout(timer: Timer, timeout: float, callback: Callable):
+	if timeout <= 0:
+		callback.call()
+		return
+
+	timer.timeout.connect(callback)
+	timer.wait_time = timeout
+	timer.one_shot = true
+	timer.start()
+
 func _ready() -> void:
 	if config == null:
 		push_error("PickUp config is missing")
 		return
 
-	lifetime_timer.timeout.connect(_on_lifetime_end)
-	lifetime_timer.wait_time = expiry_time
-	lifetime_timer.one_shot = true
-	lifetime_timer.start()
-
-	stable_display_timer.timeout.connect(_on_stable_time_end)
-	stable_display_timer.wait_time = maxf(expiry_time - blink_before_expiry, 0);
-	stable_display_timer.one_shot = true
-	stable_display_timer.start()
-
 	item_sprite.texture = config.icon_texture
+
+	_set_timeout(lifetime_timer, expiry_time, _on_lifetime_end)
+
+	var stable_duration = maxf(expiry_time - blink_before_expiry, 0);
+	_set_timeout(stable_display_timer, stable_duration, _on_stable_time_end)
+	
+	body_entered.connect(_on_body_entered)
 
 func _process(_delta: float) -> void:
 	pass
+
+func _on_body_entered(body: Node2D):
+	if config == null:
+		return
+
+	var player = body as Player
+	if player == null:
+		return
+	
+	if player.apply_pickup(config):
+		queue_free()
 
 func _on_lifetime_end():
 	queue_free()
@@ -43,6 +61,5 @@ func _set_blink_enabled(enabled: bool) -> void:
 	var item_material = item_sprite.material as ShaderMaterial;
 	if item_material != null:
 		item_material.set_shader_parameter(SHADER_PARAM_BLINK_ENABLED, enabled)
-		push_warning("set blinking to %b" % enabled)
 	else:
-		push_warning("no_material")
+		push_warning("missing item material")
