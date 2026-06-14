@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://bxrbrb8dobvpv"]
+
+[ext_resource type="Script" uid="uid://cfnnuip5xrsce" path="res://script/enemy.gd" id="1_8u16h"]
+[ext_resource type="Shader" uid="uid://y0n5818edfng" path="res://resources/shader/blink.gdshader" id="1_f87vc"]
+[ext_resource type="SpriteFrames" uid="uid://cf33yrnj0rp6j" path="res://resources/animation/slug_explosive.tres" id="1_h08p8"]
+[ext_resource type="Resource" uid="uid://c3sfl22q5q5nv" path="res://resources/config/enemy/slug_normal.tres" id="2_b7koy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8u16h"]
+resource_local_to_scene = true
+shader = ExtResource("1_f87vc")
+shader_parameter/blink_enabled = false
+shader_parameter/blink_speed = 8.0
+shader_parameter/hidden_ratio = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vufel"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f87vc"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h08p8"]
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1572563132]
+collision_layer = 4
+script = ExtResource("1_8u16h")
+config = ExtResource("2_b7koy")
+
+[node name="BodySprite" type="AnimatedSprite2D" parent="." unique_id=642511758]
+material = SubResource("ShaderMaterial_8u16h")
+sprite_frames = ExtResource("1_h08p8")
+animation = &"move"
+frame_progress = 0.061535783
+
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="." unique_id=244306698]
+shape = SubResource("CircleShape2D_vufel")
+
+[node name="TouchDamageArea" type="Area2D" parent="." unique_id=1889116013]
+collision_layer = 8
+collision_mask = 34
+
+[node name="DamageCollisionShape" type="CollisionShape2D" parent="TouchDamageArea" unique_id=738560560]
+shape = SubResource("CircleShape2D_f87vc")
+
+[node name="AttackCooldownTimer" type="Timer" parent="TouchDamageArea" unique_id=500646825]
+one_shot = true
+
+[node name="DamagedEffectTimer" type="Timer" parent="TouchDamageArea" unique_id=2003774664]
+one_shot = true
+
+[node name="ExplosionArea" type="Area2D" parent="." unique_id=22663805]
+collision_layer = 64
+collision_mask = 6
+monitoring = false
+monitorable = false
+
+[node name="ExplosionCollisionShape" type="CollisionShape2D" parent="ExplosionArea" unique_id=1716185193]
+shape = SubResource("CircleShape2D_h08p8")
+debug_color = Color(0.8862745, 0.17254902, 0.45882353, 0.16078432)

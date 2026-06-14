@@ -1,8 +1,6 @@
 extends Area2D
 class_name PickUp
 
-const SHADER_PARAM_BLINK_ENABLED := &"blink_enabled"
-
 @export var config: PickUpConfig
 @export_range(0, 30, 0.1, "or_greater") var expiry_time: float = 5
 @export_range(0, 10, 0.1, "or_greater") var blink_before_expiry: float = 1.5
@@ -55,11 +53,4 @@ func _on_lifetime_end():
 	queue_free()
 
 func _on_stable_time_end():
-	_set_blink_enabled(true)
-
-func _set_blink_enabled(enabled: bool) -> void:
-	var item_material = item_sprite.material as ShaderMaterial;
-	if item_material != null:
-		item_material.set_shader_parameter(SHADER_PARAM_BLINK_ENABLED, enabled)
-	else:
-		push_warning("missing item material")
+	GlobalShader.set_blink_enabled(item_sprite.material, true)

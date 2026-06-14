@@ -12,10 +12,13 @@ const DEFAULT_MOVE_SPEED := 1.0
 @onready var body_sprite: AnimatedSprite2D = $BodySprite
 @onready var fire_timer: Timer = $FireTimer
 @onready var armed_effect_sprite: AnimatedSprite2D = $ArmedEffectSprite
+@onready var damaged_effect_timer: Timer = $DamagedEffectTimer
 
 @export var base_move_speed: float = 120.0
 @export var base_fire_interval: float = 0.18
 @export var gun_length: float = 10.0
+
+@export var hurt_effect_duration: float = 0.2
 
 
 var player_mode := PickUpConfig.PlayerMode.NORMAL
@@ -28,17 +31,23 @@ var fire_mode:= PickUpConfig.FireMode.STRAIGHT
 var next_bullet_direction := Vector2.RIGHT
 var straight_fire_speed: float = DEFAULT_FIRE_SPEED
 var sprial_fire_speed: float = DEFAULT_FIRE_SPEED
-var fire_countdown: float = 0.0;
+var fire_countdown: float = 0.0
+
+var current_health: float = 5
 
 var move_speed: float = DEFAULT_MOVE_SPEED
 
 var buff_timers := {}
+
 
 func _ready() -> void:
 	fire_mode = PickUpConfig.FireMode.STRAIGHT
 
 	fire_timer.one_shot = true
 	fire_timer.stop()
+	
+	damaged_effect_timer.wait_time = hurt_effect_duration
+	damaged_effect_timer.timeout.connect(_on_damaged_effect_timeout)
 
 	_update_body_animation()
 	_update_armed_effect()
@@ -98,6 +107,22 @@ func _fire_bullets() -> void:
 	if has_fire_bullets:
 		fire_timer.start(_get_fire_interval())
 
+func apply_damage(amount: float) -> bool:
+	if amount <= 0: return false
+	if current_health <= 0: return false
+
+	current_health -= amount
+	if current_health > 0:
+		damaged_effect_timer.start()
+		GlobalShader.set_blink_enabled(body_sprite.material, true)
+	else:
+		queue_free()
+
+	return true
+
+func _on_damaged_effect_timeout():
+	GlobalShader.set_blink_enabled(body_sprite.material, false)
+	
 func _fire_straight(direction: Vector2) -> bool:
 	if direction == Vector2.ZERO:
 		return false

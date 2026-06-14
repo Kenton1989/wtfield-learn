@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyConfig" format=3 uid="uid://dqqnuj3nv8c47"]
+
+[ext_resource type="Script" uid="uid://di2oatg4fb24r" path="res://script/pickup_config.gd" id="1_18yor"]
+[ext_resource type="SpriteFrames" uid="uid://dl7m17gpw44ej" path="res://resources/animation/slug_fast.tres" id="1_xswhe"]
+[ext_resource type="Resource" uid="uid://uvlhd1ubaykj" path="res://resources/config/pickup_move_boost.tres" id="3_1aak1"]
+[ext_resource type="Script" uid="uid://ge5cubdrxhj" path="res://script/enemy_config.gd" id="5_bvjys"]
+
+[resource]
+script = ExtResource("5_bvjys")
+display_name = "Small Slug"
+move_speed = 30.0
+max_health = 2.0
+collision_radius = 5.0
+explosion_radius = 20.0
+reward_droprate = 0.5
+rewards = Array[ExtResource("1_18yor")]([ExtResource("3_1aak1")])
+enemy_sprite = ExtResource("1_xswhe")
+metadata/_custom_type_script = "uid://ge5cubdrxhj"

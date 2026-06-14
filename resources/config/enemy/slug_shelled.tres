@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyConfig" format=3 uid="uid://dxl150jyurldb"]
+
+[ext_resource type="SpriteFrames" uid="uid://c6yrm030jbuo0" path="res://resources/animation/slug_shelled.tres" id="1_j3qdp"]
+[ext_resource type="Script" uid="uid://di2oatg4fb24r" path="res://script/pickup_config.gd" id="2_j3qdp"]
+[ext_resource type="Resource" uid="uid://d2a0tfdyeodki" path="res://resources/config/pickup_fire_boost.tres" id="3_mmjoq"]
+[ext_resource type="Resource" uid="uid://uvlhd1ubaykj" path="res://resources/config/pickup_move_boost.tres" id="4_w5pf7"]
+[ext_resource type="Script" uid="uid://ge5cubdrxhj" path="res://script/enemy_config.gd" id="5_c1b4c"]
+[ext_resource type="Resource" uid="uid://p4aqr7mgqn4g" path="res://resources/config/pickup_sprial_mode.tres" id="5_mmjoq"]
+
+[resource]
+script = ExtResource("5_c1b4c")
+display_name = "Shelled Slug"
+move_speed = 10.0
+max_health = 6.0
+collision_radius = 10.0
+reward_droprate = 0.8
+enemy_sprite = ExtResource("1_j3qdp")
+metadata/_custom_type_script = "uid://ge5cubdrxhj"

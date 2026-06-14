@@ -5,7 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://d4l3yanmbgyb5" path="res://scene/player.tscn" id="3_33cqm"]
 [ext_resource type="PackedScene" uid="uid://cqusmb8goaypm" path="res://scene/pickup.tscn" id="4_p1ry8"]
 [ext_resource type="Shader" uid="uid://y0n5818edfng" path="res://resources/shader/blink.gdshader" id="5_xlg7c"]
+[ext_resource type="PackedScene" uid="uid://bxrbrb8dobvpv" path="res://scene/enemy.tscn" id="7_qpk70"]
 [ext_resource type="Resource" uid="uid://p4aqr7mgqn4g" path="res://resources/config/pickup_sprial_mode.tres" id="8_17rxn"]
+[ext_resource type="Resource" uid="uid://fbnlags1rkfr" path="res://resources/config/enemy/slug_explosive.tres" id="8_ll5lq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dbls1"]
 texture = ExtResource("1_5kiuu")
@@ -86,7 +88,7 @@ normal = Vector2(0, 1)
 normal = Vector2(-1, 0)
 distance = -256.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xlg7c"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ll5lq"]
 resource_local_to_scene = true
 shader = ExtResource("5_xlg7c")
 shader_parameter/blink_enabled = false
@@ -131,7 +133,7 @@ shape = SubResource("WorldBoundaryShape2D_xwcet")
 shape = SubResource("WorldBoundaryShape2D_p1ry8")
 
 [node name="Pickup" parent="." unique_id=153392444 instance=ExtResource("4_p1ry8")]
-material = SubResource("ShaderMaterial_xlg7c")
+material = SubResource("ShaderMaterial_ll5lq")
 position = Vector2(149, 67)
 config = ExtResource("8_17rxn")
 expiry_time = 121.0
@@ -144,3 +146,30 @@ expiry_time = 30.0
 [node name="Pickup3" parent="." unique_id=1805418385 instance=ExtResource("4_p1ry8")]
 position = Vector2(110, 50)
 config = ExtResource("8_17rxn")
+
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=387576328]
+
+[node name="Enemy5" parent="EnemyContainer" unique_id=1572563132 node_paths=PackedStringArray("player_to_seek") instance=ExtResource("7_qpk70")]
+position = Vector2(93, 100)
+config = ExtResource("8_ll5lq")
+player_to_seek = NodePath("../../Player")
+
+[node name="Enemy3" parent="EnemyContainer" unique_id=1887547653 node_paths=PackedStringArray("player_to_seek") instance=ExtResource("7_qpk70")]
+position = Vector2(97, 143)
+config = ExtResource("8_ll5lq")
+player_to_seek = NodePath("../../Player")
+
+[node name="Enemy2" parent="EnemyContainer" unique_id=2004444824 node_paths=PackedStringArray("player_to_seek") instance=ExtResource("7_qpk70")]
+position = Vector2(26, 143)
+config = ExtResource("8_ll5lq")
+player_to_seek = NodePath("../../Player")
+
+[node name="Enemy" parent="EnemyContainer" unique_id=1265320798 node_paths=PackedStringArray("player_to_seek") instance=ExtResource("7_qpk70")]
+position = Vector2(35, 100)
+config = ExtResource("8_ll5lq")
+player_to_seek = NodePath("../../Player")
+
+[node name="Enemy4" parent="EnemyContainer" unique_id=680227961 node_paths=PackedStringArray("player_to_seek") instance=ExtResource("7_qpk70")]
+position = Vector2(65, 178)
+config = ExtResource("8_ll5lq")
+player_to_seek = NodePath("../../Player")

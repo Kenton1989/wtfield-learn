@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cqusmb8goaypm"]
 
 [ext_resource type="Shader" uid="uid://y0n5818edfng" path="res://resources/shader/blink.gdshader" id="1_xj56s"]
-[ext_resource type="Script" uid="uid://x8n522to2q7v" path="res://scripts/pickup.gd" id="2_x228r"]
+[ext_resource type="Script" uid="uid://x8n522to2q7v" path="res://script/pickup.gd" id="2_x228r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x228r"]
 resource_local_to_scene = true

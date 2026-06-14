@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PickUpConfig" format=3 uid="uid://d2a0tfdyeodki"]
 
-[ext_resource type="Script" uid="uid://di2oatg4fb24r" path="res://scripts/pickup_config.gd" id="1_gtikk"]
+[ext_resource type="Script" uid="uid://di2oatg4fb24r" path="res://script/pickup_config.gd" id="1_gtikk"]
 [ext_resource type="Texture2D" uid="uid://cm0kga1it4b0l" path="res://resources/atlas/pickup_fire_boost.tres" id="1_wu4af"]
 
 [resource]

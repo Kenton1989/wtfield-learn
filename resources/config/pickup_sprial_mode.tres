@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PickUpConfig" format=3 uid="uid://p4aqr7mgqn4g"]
 
-[ext_resource type="Script" uid="uid://di2oatg4fb24r" path="res://scripts/pickup_config.gd" id="1_b0dyf"]
+[ext_resource type="Script" uid="uid://di2oatg4fb24r" path="res://script/pickup_config.gd" id="1_b0dyf"]
 [ext_resource type="Texture2D" uid="uid://dqy20bhqtxey7" path="res://resources/atlas/pickup_spiral_mode.tres" id="1_gerrx"]
 
 [resource]
