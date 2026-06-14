@@ -75,6 +75,13 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_dbls1")
 sources/1 = SubResource("TileSetAtlasSource_33cqm")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ll5lq"]
+resource_local_to_scene = true
+shader = ExtResource("5_xlg7c")
+shader_parameter/blink_enabled = false
+shader_parameter/blink_speed = 12.0
+shader_parameter/hidden_ratio = 0.5
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xlg7c"]
 distance = -256.0
 
@@ -88,13 +95,6 @@ normal = Vector2(0, 1)
 normal = Vector2(-1, 0)
 distance = -256.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ll5lq"]
-resource_local_to_scene = true
-shader = ExtResource("5_xlg7c")
-shader_parameter/blink_enabled = false
-shader_parameter/blink_speed = 12.0
-shader_parameter/hidden_ratio = 0.5
-
 [node name="Game" type="Node2D" unique_id=421054828]
 
 [node name="GroundTileMapLayer" type="TileMapLayer" parent="." unique_id=403536699]
@@ -102,7 +102,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAA
 tile_set = SubResource("TileSet_33cqm")
 
 [node name="OverlayTileMapLayer" type="TileMapLayer" parent="." unique_id=865177495]
-tile_map_data = PackedByteArray("AAAAAAAAAQAAAAMAAAAAAAEAAAADAAIAAAAAAAIAAAADAAMAAAAAAAMAAAADAAIAAAAAAAQAAAADAAMAAAAAAAUAAQAAAAMAAAAAAAYAAAADAAIAAAAAAAcAAAADAAMAAAAAAAoAAAADAAIAAAAAAAsAAAADAAMAAAAAAAwAAAADAAIAAAAAAA0AAAADAAMAAAAAAA4AAQAAAAIAAAAAAA8AAQAAAAIAAAABAAAAAQAAAAQAAAABAAEAAAACAAMAAAABAAIAAAACAAMAAAABAA8AAQAAAAIAAAACAAAAAQAAAAQAAAACAAEAAAAAAAIAAAACAA8AAAACAAAAAAADAAAAAQAAAAUAAAADAAQAAAACAAMAAAADAA8AAQAAAAMAAAAEAAAAAQAAAAUAAAAEAAQAAAACAAMAAAAEAA8AAAAAAAIAAAAFAAAAAQAAAAUAAAAFAA8AAAACAAMAAAAGAAAAAQAAAAUAAAAGAA8AAAAAAAIAAAAHAAAAAAABAAAAAAAHAAcAAAACAAMAAAAHAAgAAAACAAMAAAAHAA8AAAAAAAEAAAAIAAAAAAABAAAAAAAIAAcAAAACAAMAAAAIAAgAAAACAAMAAAAJAAAAAAABAAAAAAAKAAAAAAACAAMAAAAKAA8AAQAAAAUAAAALAAAAAAACAAMAAAALAAsAAAACAAMAAAALAA8AAQAAAAUAAAAMAAAAAAABAAAAAAAMAAsAAAACAAMAAAAMAA8AAQAAAAUAAAANAAAAAAABAAAAAAANAA4AAAACAAMAAAANAA8AAQAAAAUAAAAOAAAAAAABAAAAAAAOAA0AAAACAAMAAAAOAA4AAAACAAMAAAAOAA8AAAACAAMAAAAPAAAAAAADAAIAAAAPAAEAAAADAAMAAAAPAAIAAAADAAIAAAAPAAMAAAADAAMAAAAPAAQAAAADAAIAAAAPAAUAAAADAAMAAAAPAAYAAQAAAAIAAAAPAAcAAQAAAAMAAAAPAAoAAAAAAAIAAAAPAAsAAQAAAAQAAAAPAAwAAQAAAAQAAAAPAA0AAQAAAAQAAAAPAA4AAQAAAAQAAAAPAA8AAAAAAAEAAAAAAAkAAQAAAAAAAAAAAAgAAQAAAAAAAAAPAAgAAQAAAAAAAAAPAAkAAQAAAAAAAAADAAMAAAACAAMAAAAEAAMAAAACAAMAAAALAAwAAAACAAMAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAMAAAAAAAEAAAADAAIAAAAAAAIAAAADAAMAAAAAAAMAAAADAAIAAAAAAAQAAAADAAMAAAAAAAUAAQAAAAMAAAAAAAYAAAADAAIAAAAAAAcAAAADAAMAAAAAAAoAAAADAAIAAAAAAAsAAAADAAMAAAAAAAwAAAADAAIAAAAAAA0AAAADAAMAAAAAAA4AAQAAAAIAAAAAAA8AAQAAAAIAAAABAAAAAQAAAAQAAAABAAEAAAACAAMAAAABAAIAAAACAAMAAAABAA8AAQAAAAIAAAACAAAAAQAAAAQAAAACAAEAAAAAAAIAAAACAA8AAAACAAAAAAADAAAAAQAAAAUAAAADAAQAAAACAAMAAAADAA8AAQAAAAMAAAAEAAAAAQAAAAUAAAAEAAQAAAACAAMAAAAEAA8AAAAAAAIAAAAFAAAAAQAAAAUAAAAFAA8AAAACAAMAAAAGAAAAAQAAAAUAAAAGAA8AAAAAAAIAAAAHAAAAAAABAAAAAAAHAAcAAAACAAMAAAAHAAgAAAACAAMAAAAHAA8AAAAAAAEAAAAIAAAAAAABAAAAAAAIAAcAAAACAAMAAAAIAAgAAAACAAMAAAAJAAAAAAABAAAAAAAKAAAAAAACAAMAAAAKAA8AAQAAAAUAAAALAAAAAAACAAMAAAALAAsAAAACAAMAAAALAA8AAQAAAAUAAAAMAAAAAAABAAAAAAAMAAsAAAACAAMAAAAMAA8AAQAAAAUAAAANAAAAAAABAAAAAAANAA4AAAACAAMAAAANAA8AAQAAAAUAAAAOAAAAAAABAAAAAAAOAA0AAAACAAMAAAAOAA4AAAACAAMAAAAOAA8AAAACAAMAAAAPAAAAAAADAAIAAAAPAAEAAAADAAMAAAAPAAIAAAADAAIAAAAPAAMAAAADAAMAAAAPAAQAAAADAAIAAAAPAAUAAAADAAMAAAAPAAYAAQAAAAIAAAAPAAcAAQAAAAMAAAAPAAoAAAAAAAIAAAAPAAsAAQAAAAQAAAAPAAwAAQAAAAQAAAAPAA0AAQAAAAQAAAAPAA4AAQAAAAQAAAAPAA8AAAAAAAEAAAAAAAkAAQAAAAAAAAAPAAgAAQAAAAAAAAAPAAkAAQAAAAAAAAADAAMAAAACAAMAAAAEAAMAAAACAAMAAAALAAwAAAACAAMAAAAAAAgAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_33cqm")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=832804428]
@@ -111,26 +111,6 @@ zoom = Vector2(2, 2)
 
 [node name="Player" parent="." unique_id=1991648755 instance=ExtResource("3_33cqm")]
 position = Vector2(184, 100)
-
-[node name="BoundaryBottom" type="StaticBody2D" parent="." unique_id=1477268450]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryBottom" unique_id=1808842239]
-shape = SubResource("WorldBoundaryShape2D_xlg7c")
-
-[node name="BoundaryLeft" type="StaticBody2D" parent="." unique_id=1538821886]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryLeft" unique_id=1193969095]
-shape = SubResource("WorldBoundaryShape2D_33cqm")
-
-[node name="BoundaryTop" type="StaticBody2D" parent="." unique_id=1343652804]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryTop" unique_id=1909497679]
-shape = SubResource("WorldBoundaryShape2D_xwcet")
-
-[node name="BoundaryRight" type="StaticBody2D" parent="." unique_id=890905472]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundaryRight" unique_id=2001248164]
-shape = SubResource("WorldBoundaryShape2D_p1ry8")
 
 [node name="Pickup" parent="." unique_id=153392444 instance=ExtResource("4_p1ry8")]
 material = SubResource("ShaderMaterial_ll5lq")
@@ -173,3 +153,36 @@ player_to_seek = NodePath("../../Player")
 position = Vector2(65, 178)
 config = ExtResource("8_ll5lq")
 player_to_seek = NodePath("../../Player")
+
+[node name="EnemySpawnPointContainer" type="Node2D" parent="." unique_id=479851361]
+
+[node name="EnemySpawnLeft" type="Marker2D" parent="EnemySpawnPointContainer" unique_id=973636586]
+position = Vector2(8, 143)
+
+[node name="EnemySpawnRight" type="Marker2D" parent="EnemySpawnPointContainer" unique_id=988763647]
+position = Vector2(248, 143)
+
+[node name="EnemySpawnBottom" type="Marker2D" parent="EnemySpawnPointContainer" unique_id=1710828590]
+position = Vector2(143, 248)
+
+[node name="WorldBound" type="Node2D" parent="." unique_id=1903818517]
+
+[node name="BoundaryBottom" type="StaticBody2D" parent="WorldBound" unique_id=1477268450]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBound/BoundaryBottom" unique_id=1808842239]
+shape = SubResource("WorldBoundaryShape2D_xlg7c")
+
+[node name="BoundaryLeft" type="StaticBody2D" parent="WorldBound" unique_id=1538821886]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBound/BoundaryLeft" unique_id=1193969095]
+shape = SubResource("WorldBoundaryShape2D_33cqm")
+
+[node name="BoundaryTop" type="StaticBody2D" parent="WorldBound" unique_id=1343652804]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBound/BoundaryTop" unique_id=1909497679]
+shape = SubResource("WorldBoundaryShape2D_xwcet")
+
+[node name="BoundaryRight" type="StaticBody2D" parent="WorldBound" unique_id=890905472]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBound/BoundaryRight" unique_id=2001248164]
+shape = SubResource("WorldBoundaryShape2D_p1ry8")

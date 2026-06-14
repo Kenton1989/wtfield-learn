@@ -7,6 +7,8 @@ enum EnemyStatus {
 	EXPLODE
 }
 
+const PICKUP = preload("uid://cqusmb8goaypm")
+
 @export var config: EnemyConfig
 @export var hurt_blink_duration: float = 0.2
 @export var max_explode_attack_count: int = 16
@@ -21,10 +23,11 @@ enum EnemyStatus {
 @onready var explosion_collision_shape: CollisionShape2D = $ExplosionArea/ExplosionCollisionShape
 
 
+@export var player_to_seek: Player = null
+var player_to_attack: Player = null
 var current_health: float = 1
 var current_status: EnemyStatus = EnemyStatus.NORMAL
-var player_to_attack: Player = null
-@export var player_to_seek: Player = null
+var rand := RandomNumberGenerator.new()
 
 func setup(config: EnemyConfig, player_to_seek: Player):
 	self.config = config
@@ -32,6 +35,7 @@ func setup(config: EnemyConfig, player_to_seek: Player):
 	_apply_config()
 
 func _ready():
+	rand.randomize()
 	touch_damage_area.body_entered.connect(_on_body_entered)
 	touch_damage_area.body_exited.connect(_on_body_exited)
 	touch_damage_area.area_entered.connect(_on_area_entered)
@@ -152,16 +156,46 @@ func _on_area_entered(area: Area2D):
 		bullet.queue_free()
 
 func _on_body_animation_finished():
+	_handle_enemy_death()
+
+func _handle_enemy_death():
 	if current_status == EnemyStatus.DIE:
 		if config.is_explosive:
 			_explode()
 		else:
+			_drop_pickup_item()
 			queue_free()
 		return
 
 	if current_status == EnemyStatus.EXPLODE:
+		_drop_pickup_item()
 		queue_free()
 		return
+
+func _drop_pickup_item():
+	if rand.randf() >= config.reward_droprate:
+		return
+	
+	var pickup = PICKUP.instantiate() as PickUp
+	pickup.global_position = global_position
+	var pickup_config := _roll_pickup_item()
+	if pickup_config == null:
+		return
+	pickup.config = pickup_config
+
+	var scene = get_tree().current_scene
+	if scene == null:
+		return false
+	scene.add_child(pickup)
+
+func _roll_pickup_item() -> PickUpConfig:
+	if config.rewards.is_empty():
+		return
+
+	var weights := PackedFloat32Array(config.rewards.map(func (r): return r.drop_weight))
+	var index = rand.rand_weighted(weights)
+
+	return config.rewards[index]
 
 func _on_damaged_effect_timeout():
 	GlobalShader.set_blink_enabled(body_sprite.material, false)
