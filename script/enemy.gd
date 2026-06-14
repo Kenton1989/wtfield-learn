@@ -32,7 +32,6 @@ var rand := RandomNumberGenerator.new()
 func setup(config: EnemyConfig, player_to_seek: Player):
 	self.config = config
 	self.player_to_seek = player_to_seek
-	_apply_config()
 
 func _ready():
 	rand.randomize()
@@ -59,7 +58,8 @@ func _physics_process(_delta: float) -> void:
 	velocity = move_direction * config.move_speed
 	_update_animation_direction(move_direction)
 	move_and_slide()
-	
+
+	_try_attack_player()
 
 func _apply_config():
 	if config == null:
@@ -97,6 +97,7 @@ func _setup_body_radius(radius: float):
 	var body_shape = body_collision_shape.shape as CircleShape2D
 	if body_shape != null:
 		body_shape.radius = radius
+	push_warning("body radius %f" % radius)
 
 	var damage_shape = damage_collision_shape.shape as CircleShape2D
 	if damage_shape != null:

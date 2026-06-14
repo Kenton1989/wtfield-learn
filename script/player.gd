@@ -12,13 +12,13 @@ const DEFAULT_MOVE_SPEED := 1.0
 @onready var body_sprite: AnimatedSprite2D = $BodySprite
 @onready var fire_timer: Timer = $FireTimer
 @onready var armed_effect_sprite: AnimatedSprite2D = $ArmedEffectSprite
-@onready var damaged_effect_timer: Timer = $DamagedEffectTimer
+@onready var invincible_timer: Timer = $InvincibleTimer
 
 @export var base_move_speed: float = 120.0
 @export var base_fire_interval: float = 0.18
 @export var gun_length: float = 10.0
 
-@export var hurt_effect_duration: float = 0.2
+@export var invincible_duration: float = 1
 
 
 var player_mode := PickUpConfig.PlayerMode.NORMAL
@@ -46,8 +46,8 @@ func _ready() -> void:
 	fire_timer.one_shot = true
 	fire_timer.stop()
 	
-	damaged_effect_timer.wait_time = hurt_effect_duration
-	damaged_effect_timer.timeout.connect(_on_damaged_effect_timeout)
+	invincible_timer.wait_time = invincible_duration
+	invincible_timer.timeout.connect(_on_invincible_timeout)
 
 	_update_body_animation()
 	_update_armed_effect()
@@ -110,17 +110,21 @@ func _fire_bullets() -> void:
 func apply_damage(amount: float) -> bool:
 	if amount <= 0: return false
 	if current_health <= 0: return false
+	if _is_invincible(): return false
 
 	current_health -= amount
 	if current_health > 0:
-		damaged_effect_timer.start()
+		invincible_timer.start()
 		GlobalShader.set_blink_enabled(body_sprite.material, true)
 	else:
 		queue_free()
 
 	return true
 
-func _on_damaged_effect_timeout():
+func _is_invincible() -> bool:
+	return !invincible_timer.is_stopped()
+
+func _on_invincible_timeout():
 	GlobalShader.set_blink_enabled(body_sprite.material, false)
 	
 func _fire_straight(direction: Vector2) -> bool:

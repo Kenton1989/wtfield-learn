@@ -13,12 +13,15 @@ shader_parameter/blink_speed = 8.0
 shader_parameter/hidden_ratio = 0.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vufel"]
+resource_local_to_scene = true
 radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f87vc"]
+resource_local_to_scene = true
 radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h08p8"]
+resource_local_to_scene = true
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1572563132]
 collision_layer = 4
